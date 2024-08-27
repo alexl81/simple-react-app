@@ -1,38 +1,37 @@
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 import s from './Dialogs.module.css';
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
-import {sendMessageActionCreator, updateNewMessageBodyActionCreator} from "../../redux/dialogs_reducer";
-
 
 
 const Dialogs = (props) => {
 
-    // позволяет фокусироваться в поле textarea при каждом рендеринге
-    const textareaRef = useRef(null);
-    useEffect(() => {
-        textareaRef.current?.focus();
-    }, []);
-    const onFocus = (e) => {
-        let value = e.target.value;
-        e.target.value = '';
-        e.target.value = value;
-    }
+
+    // // позволяет фокусироваться в поле textarea при каждом рендеринге
+    // const textareaRef = useRef(null);
+    // useEffect(() => {
+    //     textareaRef.current?.focus();
+    // }, []);
+    // const onFocus = (e) => {
+    //     let value = e.target.value;
+    //     e.target.value = '';
+    //     e.target.value = value;
+    // }
 
     let dialogsElements = props.dialogsPage.dialogs
-        .map(d => <DialogItem name={d.name} id={d.id}/>);
+        .map(d => <DialogItem name={d.name} id={d.id} key={d.id}/>);
 
     let messagesElements = props.dialogsPage.messages
-        .map(m => <Message textMessage={m.textMessage} id={m.id}/>);
+        .map(m => <Message textMessage={m.textMessage} id={m.id} key={m.id}/>);
 
     let onSendMessageClick = () => {
-        props.dispatch(sendMessageActionCreator());
+        props.sendMessage();
     }
 
 
     let onNewMessageChange = (e) => {
         let body = e.target.value;
-        props.dispatch(updateNewMessageBodyActionCreator(body));
+        props.updateNewMessageBody(body);
     }
 
     return (
@@ -47,8 +46,9 @@ const Dialogs = (props) => {
                         <textarea value={props.dialogsPage.newMessageBody}
                                     onChange={onNewMessageChange}
                                     placeholder='Enter your message'
-                                    ref={textareaRef}
-                                    onFocus={onFocus}/>
+                                    // ref={textareaRef}
+                                    // onFocus={onFocus}
+                        />
                     </div>
                     <div>
                         <button onClick={onSendMessageClick}>Send</button>
