@@ -6,7 +6,8 @@ import {maxLengthCreator, required} from "../../../utils/validators/validators";
 import {Textarea} from "../../common/FormsControls/FormsControls";
 
 
-const MyPosts = (props) => {
+//React.memo мы оборачиваем компоненту для избавления от избыточного рендеринга (для оптимизации)
+const MyPosts = React.memo((props => {
 
     let postData = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount} key={p.id}/>)
 
@@ -23,7 +24,7 @@ const MyPosts = (props) => {
             </div>
         </div>
     );
-}
+}));
 
 const maxLength10 = maxLengthCreator(10);
 

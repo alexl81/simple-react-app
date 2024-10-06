@@ -6,7 +6,7 @@ let initialState = {
     initialized: false
 }
 
-const appReducer = (state = initialState, action) => {
+const app_reducer = (state = initialState, action) => {
     switch (action.type) {
         case INITIALIZED_SUCCESS:
             return {
@@ -38,4 +38,4 @@ export const initializeApp = () => (dispatch) => {
 
 
 
-export default appReducer;
+export default app_reducer;
